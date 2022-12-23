@@ -1,7 +1,21 @@
 from flask import Flask, render_template, url_for, redirect, request
 
+import yaml
+
 # создаём объект Flask с параметром name
 app = Flask(__name__)
+
+
+
+db = yaml.load(open('db.yaml'))
+app.config('PG_HOST') == db['pg_host']
+app.config('PG_USER') == db['pg_user']
+app.config('PG_PASSWORD') == db['pg_password']
+app.config('PG_DB') == db['pg_db']
+
+print(PG_HOST)
+#
+
 
 @app.route('/')
 def index():
@@ -17,7 +31,7 @@ def name():
 def client():
     return redirect(url_for('name'))
 
-@app.route('/file')
+@app.route('/file') 
 def file():
     return render_template('file.html')
 
