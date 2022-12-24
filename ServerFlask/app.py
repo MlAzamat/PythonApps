@@ -45,7 +45,8 @@ def login():
 @app.route( '/onlybutton' , methods = [ 'GET' , 'POST' ]) 
 def onlybutton(): 
     if request . method == 'POST' : 
-        return 'Ураа, поехали !!!'
+        msg = 'Ураа, поехали !!!'
+        return render_template('onlybutton.html', msg=msg)
     return render_template('onlybutton.html')
 
 @app.errorhandler(404)

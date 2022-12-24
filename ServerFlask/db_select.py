@@ -6,21 +6,20 @@ from yaml.loader import SafeLoader
 
 
 def get_student_details(student_id):
-    # ямл пока не работает
-    db = yaml.load(open('C:\Github\PythonApps\ServerFlask\db.yaml'),Loader=yaml.FullLoader)
-    dbhost = db['pg_host']
-    dbuser = db['pg_user']
-    dbpassword = db['pg_password']
-    dbdatabase = db['pg_db']
-    dbport = db['pg_port']
 
     try:
+        db = yaml.load(open('C:\Github\PythonApps\ServerFlask\db.yaml'),Loader=yaml.FullLoader)
+        dbhost = db['pg_host']
+        dbuser = db['pg_user']
+        dbpassword = db['pg_password']
+        dbdatabase = db['pg_db']
+        dbport = db['pg_port']
         # подключаемся к сущ Бд
-        connection = psycopg2.connect(user="postgres",
-            password="1111",
-            host="127.0.0.1",
-            port="5432",
-            database="postgres")
+        connection = psycopg2.connect(user=dbuser,
+            password=dbpassword,
+            host=dbhost,
+            port=dbport,
+            database=dbdatabase)
 
         cursor = connection.cursor()
         postgreSQL_select_Query = "select * from students where id = %s"
@@ -41,7 +40,6 @@ def get_student_details(student_id):
         print(str(studetnts_records))
         return str(studetnts_records)
 
-    
     except (Exception, Error) as error:
         print("Ошибка при работе с POstgreSQL", error)
     finally:
