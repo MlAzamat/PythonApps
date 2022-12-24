@@ -1,8 +1,19 @@
-
 import psycopg2
 from psycopg2 import Error
+import yaml
+from yaml.loader import SafeLoader
+
+
 
 def get_student_details(student_id):
+    # ямл пока не работает
+    db = yaml.load(open('C:\Github\PythonApps\ServerFlask\db.yaml'),Loader=yaml.FullLoader)
+    dbhost = db['pg_host']
+    dbuser = db['pg_user']
+    dbpassword = db['pg_password']
+    dbdatabase = db['pg_db']
+    dbport = db['pg_port']
+
     try:
         # подключаемся к сущ Бд
         connection = psycopg2.connect(user="postgres",
@@ -23,16 +34,13 @@ def get_student_details(student_id):
 #
 #cursor.execute(postgreSQL_select_Query) - при выводе строк без условия where
 
-        cursor.execute(postgreSQL_select_Query, (student_id,))
+        result_value = cursor.execute(postgreSQL_select_Query, (student_id,))
+      #  if result_value > 0:
         print("Выбор строк из таблицы student с помощью cursor.fetchall")
         studetnts_records = cursor.fetchall()
+        print(str(studetnts_records))
+        return str(studetnts_records)
 
-        print("Вывод подходящей строки и её столбцов")
-        for row in studetnts_records:
-            print("id =", row[0], )
-            print("fname =", row[1], )
-            print("lname =", row[2], )
-            print("pet =", row[3], "\n")
     
     except (Exception, Error) as error:
         print("Ошибка при работе с POstgreSQL", error)
@@ -42,5 +50,4 @@ def get_student_details(student_id):
             connection.close()
             print("Соединение с PG закрыто")
   
-get_student_details(2)
-get_student_details(3)
+#get_student_details(2)

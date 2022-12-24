@@ -1,21 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Server in Python</title>
-</head>
-<body>
-    <h1>Hi Client</h1>
-    <h2>All list = {{colors}}</h2>
+{% extends 'basehtml.html' %}
+{% block content %}
+    <h1>All list =  {{colors}} </h1>
     {% for color in colors %}
-    <h3>{{color}}</h3>
+        <h3>{{color}}</h3>
     {% endfor %}
     {% if 'green' in colors %}
-    <h4>Green is in the list </h4>
+        <h4>Green is in the List</h4>
     {% else %}
-    <h4>Green is not in the list </h4>
+        <h4>Green is not in the List</h4>
     {% endif %}
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'basehtml.html' %}
+{% block content %}
+    <div class="jumbotron">
+        <h1>Welcome</h1>
+        <form method="POST">
+            <input type="password" name="password"/>
+            <input type="submit"/>
+            <h1>{{result_select}}</h1>
+        </form>
+    </div>
+    <button type="button" class="btn btn-success">Go!</button>
+{% endblock %}

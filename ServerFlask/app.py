@@ -1,20 +1,10 @@
 from flask import Flask, render_template, url_for, redirect, request
-
-import yaml
+from flask_bootstrap import Bootstrap
+from db_select import get_student_details
 
 # создаём объект Flask с параметром name
 app = Flask(__name__)
-
-
-
-db = yaml.load(open('db.yaml'))
-app.config('PG_HOST') == db['pg_host']
-app.config('PG_USER') == db['pg_user']
-app.config('PG_PASSWORD') == db['pg_password']
-app.config('PG_DB') == db['pg_db']
-
-print(PG_HOST)
-#
+Bootstrap(app)
 
 
 @app.route('/')
@@ -35,11 +25,33 @@ def client():
 def file():
     return render_template('file.html')
 
-#@app.route( '/login' , methods = [ 'GET' , 'POST' ]) 
-#def login (): 
-#    if request . method == 'POST' : 
-#        return do_the_login () else: 
-#            return show_the_login_form ()
+@app.route('/css') 
+def css():
+    return render_template('css.html')
+
+@app.route('/form_db', methods=['GET','POST']) 
+def form_db():
+    if request.method == 'POST':
+        result_select = str(get_student_details(2))
+        return render_template('form_db.html', result_select=result_select)
+    return render_template('form_db.html', result_select = 'Введите пароль')
+
+@app.route( '/login' , methods = [ 'GET' , 'POST' ]) 
+def login(): 
+    if request . method == 'POST' : 
+        return 'Регистрация успешна'
+    return render_template('login.html')
+
+@app.route( '/onlybutton' , methods = [ 'GET' , 'POST' ]) 
+def onlybutton(): 
+    if request . method == 'POST' : 
+        return 'Ураа, поехали !!!'
+    return render_template('onlybutton.html')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    #return 'Ooops! this page was not found ;('
+    return render_template('error404.html')
 
 # запускать - py app.py
 
